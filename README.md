@@ -1,6 +1,6 @@
 # Java Chat
 
-**JAVA-Chat** è un'applicazione di chat client-server implementata in Java. Il progetto include una GUI per il client e una versione basata su console per il server. L'applicazione consente agli utenti di comunicare tra loro in tempo reale tramite una connessione di rete.
+**Java Chat** è un'applicazione di chat client-server implementata in Java. Il progetto include una GUI per il client e una versione basata su console per il server. L'applicazione consente agli utenti di comunicare tra loro in tempo reale tramite una connessione di rete.
 
 ## Funzionalità
 

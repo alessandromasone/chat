@@ -1,54 +1,120 @@
 # Java Chat
 
-**Java Chat** è un'applicazione di chat client-server implementata in Java. Il progetto include una GUI per il client e una versione basata su console per il server. L'applicazione consente agli utenti di comunicare tra loro in tempo reale tramite una connessione di rete.
+Un'applicazione di chat multicliente scritta in Java che consente la comunicazione in tempo reale tra più utenti. Gli utenti possono connettersi al server, inviare messaggi pubblici o privati, cambiare il proprio colore del testo e utilizzare emoji nei messaggi.
 
 ## Funzionalità
 
-- Connessione client-server per consentire la comunicazione tra gli utenti.
-- Interfaccia utente intuitiva per il client, che include un elenco degli utenti online e un'area per visualizzare e inviare messaggi.
-- Comandi speciali per eseguire azioni come inviare messaggi privati e cambiare il colore del nome utente.
-- Supporto per emoticon personalizzate per arricchire le conversazioni.
-- Gestione di più utenti contemporaneamente attraverso il server.
+- **Connessione multiutente**: Il server supporta più utenti connessi simultaneamente.
+- **Messaggi pubblici**: Gli utenti possono inviare messaggi che vengono broadcastati a tutti i partecipanti.
+- **Messaggi privati**: Gli utenti possono inviare messaggi privati ad altri utenti specificando il nickname.
+- **Cambio colore**: Ogni utente può cambiare il colore del proprio nome nella chat utilizzando un codice colore HEX.
+- **Emoji**: Supporta l'inserimento di emoji nei messaggi tramite una sintassi semplice (es. `:)`, `:D`, `:(`, ecc.).
+- **Gestione degli utenti**: Ogni utente ha un nickname unico, un colore personalizzabile e può essere disconnesso dal server.
 
-## Istruzioni per l'uso
+## Requisiti
 
-1. Assicurati di avere installato Java Development Kit (JDK) sul tuo sistema.
-2. Clona il repository del progetto "JAVA-Chat" sul tuo computer o scarica l'archivio ZIP e decomprimilo.
-3. Apri un terminale o prompt dei comandi e posizionati nella directory del progetto.
-4. Compila i file sorgente del progetto eseguendo il seguente comando:
+- Java 8 o superiore.
+- IntelliJ IDEA o un altro IDE compatibile con Java.
+- Connessione di rete attiva per il server e i client.
 
-   ```
-   javac *.java
-   ```
+## Setup e Avvio del Progetto
 
-5. Avvia il server eseguendo il comando:
+### 1. Clona il repository
 
-   ```
-   java Server [porta]
-   ```
+Clona il repository nel tuo ambiente locale:
 
-   Sostituisci `[porta]` con il numero di porta desiderato per il server (es. 1024). Se non viene specificata una porta, verrà utilizzata la prima porta disponibile nel range di 1024-49151.
+```bash
+git clone https://github.com/alessandromasone/java-chat.git
+```
 
-6. Avvia l'applicazione client eseguendo il comando:
+### 2. Importa il progetto in IntelliJ IDEA
 
-   ```
-   java ClientGui
-   ```
+1. Apri IntelliJ IDEA.
+2. Seleziona **"Open"** e scegli la cartella del progetto appena clonato.
+3. IntelliJ IDEA rileverà automaticamente il progetto come un progetto Java.
 
-7. Nella finestra del client, inserisci il tuo nome utente, l'indirizzo IP del server e la porta del server corrispondente. Fare clic sul pulsante "Connettiti" per avviare la connessione al server.
+### 3. Compilazione e Esecuzione
 
-8. Utilizza l'area di input per digitare i messaggi che desideri inviare. Premi Invio o fai clic sul pulsante "Invio" per inviare il messaggio a tutti gli utenti. Puoi anche utilizzare comandi speciali come `@nickname` per inviare un messaggio privato a un utente specifico o `#colore` per cambiare il colore del tuo nome utente.
+Il progetto è pronto per essere eseguito direttamente da IntelliJ IDEA. Segui questi passaggi per avviare il server:
 
-9. Fai clic sul pulsante "Esci" per disconnetterti dal server e chiudere l'applicazione client.
+1. Apri la classe **`Server`** che si trova nel package `Server`.
+2. Esegui la classe come una normale applicazione Java. Puoi farlo cliccando con il tasto destro sulla classe e selezionando **"Run 'Server.main()'"** o utilizzando il comando di esecuzione in IntelliJ.
 
-## Requisiti di sistema
+### 4. Avvio del Server
 
-- Java Development Kit (JDK) 8 o versione successiva.
+Il server ascolta su una porta specificata. Se non fornisci una porta, il server cercherà automaticamente una porta libera tra quelle disponibili.
 
-## Contributi
+Puoi avviare il server con un comando come questo:
 
-Le segnalazioni di bug e i contributi al progetto sono benvenuti. Se desideri contribuire, apri una nuova issue o invia una richiesta pull con le tue modifiche proposte.
+```bash
+java -cp out/production/java-chat Server.Server <porta>
+```
+
+### 5. Connettersi al Server
+
+Una volta che il server è in esecuzione, i client possono connettersi utilizzando un'applicazione client (ad esempio tramite terminale o un'applicazione personalizzata). Ogni client dovrà inviare un nickname al server quando si connette.
+
+## Esempio di utilizzo
+
+- **Messaggio pubblico**: Un utente può inviare un messaggio a tutti con:
+
+  ```
+  Ciao a tutti!
+  ```
+
+  Questo messaggio verrà broadcastato a tutti gli utenti connessi.
+
+- **Messaggio privato**: Per inviare un messaggio privato a un altro utente, usa la sintassi:
+
+  ```
+  @nickname Ciao, come stai?
+  ```
+
+  Dove `nickname` è il nome dell'utente destinatario.
+
+- **Cambiamento del colore**: Un utente può cambiare il proprio colore utilizzando:
+
+  ```
+  #HEX_COLOR
+  ```
+
+  Ad esempio:
+
+  ```
+  #FF5733
+  ```
+
+  Questo cambierà il colore del nickname dell'utente (se il colore è valido e abbastanza scuro).
+
+- **Emoji**: Usa i codici emoji per includere immagini nei messaggi. Ad esempio:
+
+  ```
+  Ciao :) Come va?
+  ```
+
+  Verrà sostituito con l'emoji di un sorriso.
+
+## Struttura del progetto
+
+Il progetto è organizzato nelle seguenti classi principali:
+
+- **Server**: Gestisce le connessioni in ingresso, la gestione degli utenti e la broadcast dei messaggi.
+- **User**: Rappresenta un singolo utente con il suo nickname, colore e i flussi di input/output.
+- **UserHandler**: Gestisce la logica di comunicazione per ogni utente, inclusi i messaggi privati, il cambiamento di colore e l'invio di messaggi.
+- **ColorInt**: Una classe di utilità per assegnare un colore unico a ogni utente.
+- **Emoji**: Supporta la sostituzione di codici emoji con le immagini corrispondenti.
+
+## Contribuire
+
+Se desideri contribuire a questo progetto:
+
+1. Fai un fork del repository.
+2. Crea un nuovo branch per la tua funzionalità (`git checkout -b feature/nome-funzionalita`).
+3. Fai delle modifiche e assicurati di aggiungere test o documentazione dove necessario.
+4. Fai un commit delle tue modifiche (`git commit -m 'Aggiungi una funzionalità'`).
+5. Fai il push del tuo branch (`git push origin feature/nome-funzionalita`).
+6. Crea una Pull Request per le modifiche.
 
 ## Licenza
 
-Questo progetto è concesso in licenza con i termini della [Licenza MIT](link-licenza).
+Questo progetto è sotto la licenza MIT. Consulta il file `LICENSE` per maggiori dettagli.
